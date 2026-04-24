@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "budget": "预算",
+    "council": "市议会",
+    "feed": "我的动态",
+    "dashboard": "数据面板",
+    "getStarted": "开始使用"
+  },
+  "hero": {
+    "eyebrow": "马里兰州大学公园市 · 2026财年",
+    "headline1": "您的城市预算，",
+    "headline2": "用简单的话说清楚。",
+    "subheadline": "2960万美元。34,000名居民。一个地方，了解资金去向以及市议会正在决定的事情。",
+    "statPerResident": "每位居民每年",
+    "statTaxRate": "每$100 — 仅为县平均水平的一半",
+    "statCouncilItems": "本月市议会议题",
+    "exploreBudget": "浏览预算",
+    "myFeed": "我的个性化动态"
+  },
+  "budget": {
+    "eyebrow": "城市预算",
+    "heading": "您的870美元去了哪里",
+    "subheading": "大学公园市2026财年运营预算为2960万美元——约合每位居民每年870美元。您的财产税率为33.5¢/100美元——是PG县平均水平63.27¢的一半。",
+    "byDepartment": "按部门",
+    "byRevenue": "按收入来源",
+    "clickHint": "点击类别，筛选下方相关市议会议题",
+    "capitalTitle": "资本项目",
+    "changesTitle": "26财年有哪些变化"
+  },
+  "council": {
+    "eyebrow": "市议会",
+    "heading": "本周市政厅动态",
+    "subheading": "大学公园市议会近期及即将讨论的议题——用简单的话说清楚。",
+    "filteredTo": "已筛选：",
+    "clearFilter": "清除筛选",
+    "noItems": "该类别暂无近期市议会议题。",
+    "showAll": "显示所有议题",
+    "officialAgenda": "官方议程"
+  },
+  "status": {
+    "upcoming": "即将讨论",
+    "decided": "已决定",
+    "underStudy": "审议中"
+  },
+  "change": {
+    "new": "新增",
+    "removed": "取消",
+    "unchanged": "未变"
+  },
+  "platform": {
+    "eyebrow": "完整平台即将推出",
+    "heading": "为每位居民提供市政智能",
+    "subheading": "上方的面板只是开始。Civic Lens 正在为大学公园市构建完整的市政透明度工具套件。",
+    "languageAvailable": "支持 English · Español · 中文",
+    "openFeed": "打开我的动态"
+  },
+  "verify": {
+    "eyebrow": "来源验证",
+    "heading": "每份摘要均可验证",
+    "body": "当我们对城市文件进行摘要时，会对其进行哈希处理，存储到IPFS，并将哈希值注册到Polygon区块链。任何人都可以验证我们的AI所摘要的文件与城市发布的原始文件完全一致。",
+    "cta": "尝试验证来源文件",
+    "verified": "文件完整性已验证"
+  },
+  "footer": {
+    "disclaimer": "数据来源：大学公园市2026财年预算条例25-O-04（2025年5月20日通过）及collegeparkmd.gov官方市议会议程。本网站为独立市政项目，与大学公园市政府无关。",
+    "tagline": "致力于透明度 · 马里兰州大学公园市 · 2026"
+  }
+}

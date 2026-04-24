@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "budget": "Presupuesto",
+    "council": "Concejo",
+    "feed": "Mi Feed",
+    "dashboard": "Panel",
+    "getStarted": "Comenzar"
+  },
+  "hero": {
+    "eyebrow": "College Park, Maryland · AF2026",
+    "headline1": "El presupuesto de tu ciudad,",
+    "headline2": "en palabras simples.",
+    "subheadline": "$29.6 millones. 34,000 residentes. Un solo lugar para ver adónde va el dinero y qué está decidiendo el concejo ahora mismo.",
+    "statPerResident": "por residente / año",
+    "statTaxRate": "por $100 — la mitad del promedio del condado",
+    "statCouncilItems": "temas del concejo este mes",
+    "exploreBudget": "Explorar el presupuesto",
+    "myFeed": "Mi feed personalizado"
+  },
+  "budget": {
+    "eyebrow": "Presupuesto Municipal",
+    "heading": "A dónde van tus $870",
+    "subheading": "El presupuesto operativo AF2026 de College Park es $29.6M — aproximadamente $870/residente/año. Tu tasa de impuesto predial es 33.5¢/$100 — la mitad del promedio del condado PG de 63.27¢/$100.",
+    "byDepartment": "Por Departamento",
+    "byRevenue": "Por Fuente de Ingresos",
+    "clickHint": "Haz clic en una categoría para filtrar los temas del concejo abajo",
+    "capitalTitle": "Proyectos de Capital",
+    "changesTitle": "Qué cambió en AF26"
+  },
+  "council": {
+    "eyebrow": "Concejo Municipal",
+    "heading": "Esta semana en el Ayuntamiento",
+    "subheading": "Temas recientes y próximos del Concejo Municipal de College Park — en palabras simples.",
+    "filteredTo": "Filtrado por",
+    "clearFilter": "limpiar filtro",
+    "noItems": "No hay temas recientes del concejo en esta categoría.",
+    "showAll": "Mostrar todos los temas",
+    "officialAgenda": "Agenda Oficial"
+  },
+  "status": {
+    "upcoming": "Próximo",
+    "decided": "Decidido",
+    "underStudy": "En Estudio"
+  },
+  "change": {
+    "new": "Nuevo",
+    "removed": "Eliminado",
+    "unchanged": "Sin cambio"
+  },
+  "platform": {
+    "eyebrow": "Próximamente en la plataforma completa",
+    "heading": "Inteligencia cívica para cada residente",
+    "subheading": "El panel de arriba es solo el comienzo. Civic Lens está construyendo el conjunto completo de herramientas de transparencia cívica para College Park.",
+    "languageAvailable": "Disponible en English · Español · 中文",
+    "openFeed": "Abrir mi feed"
+  },
+  "verify": {
+    "eyebrow": "Verificación de Fuentes",
+    "heading": "Cada resumen es verificable",
+    "body": "Cuando resumimos un documento municipal, calculamos su hash, lo almacenamos en IPFS y registramos el hash en la blockchain de Polygon. Cualquiera puede verificar que nuestra IA resumió el documento exacto publicado por la ciudad.",
+    "cta": "Verificar un documento fuente",
+    "verified": "Integridad del documento verificada"
+  },
+  "footer": {
+    "disclaimer": "Datos obtenidos de la Ordenanza Presupuestaria AF26 de College Park 25-O-04 (adoptada el 20 de mayo de 2025) y las agendas oficiales del Concejo Municipal de collegeparkmd.gov. Este sitio es un proyecto cívico independiente y no está afiliado con la Ciudad de College Park.",
+    "tagline": "Construido para la transparencia · College Park, MD · 2026"
+  }
+}

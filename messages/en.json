@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "budget": "Budget",
+    "council": "Council",
+    "feed": "My Feed",
+    "dashboard": "Dashboard",
+    "getStarted": "Get started"
+  },
+  "hero": {
+    "eyebrow": "College Park, Maryland · FY2026",
+    "headline1": "Your city budget,",
+    "headline2": "in plain English.",
+    "subheadline": "$29.6 million. 34,000 residents. One place to see where the money goes and what the council is deciding right now.",
+    "statPerResident": "per resident / year",
+    "statTaxRate": "per $100 — half the county avg",
+    "statCouncilItems": "council items this month",
+    "exploreBudget": "Explore the budget",
+    "myFeed": "My personalized feed"
+  },
+  "budget": {
+    "eyebrow": "City Budget",
+    "heading": "Where your $870 goes",
+    "subheading": "College Park's FY2026 operating budget is $29.6M — roughly $870/resident/year. Your property tax rate is 33.5¢/$100 — half the PG County average of 63.27¢/$100.",
+    "byDepartment": "By Department",
+    "byRevenue": "By Revenue Source",
+    "clickHint": "Click a category to filter council items below",
+    "capitalTitle": "Capital Projects",
+    "changesTitle": "What changed in FY26"
+  },
+  "council": {
+    "eyebrow": "City Council",
+    "heading": "This week at City Hall",
+    "subheading": "Recent and upcoming items from the College Park City Council — in plain English.",
+    "filteredTo": "Filtered to",
+    "clearFilter": "clear filter",
+    "noItems": "No recent council items in this category.",
+    "showAll": "Show all items",
+    "officialAgenda": "Official Agenda"
+  },
+  "status": {
+    "upcoming": "Upcoming",
+    "decided": "Decided",
+    "underStudy": "Under Study"
+  },
+  "change": {
+    "new": "New",
+    "removed": "Removed",
+    "unchanged": "Unchanged"
+  },
+  "platform": {
+    "eyebrow": "Coming in the full platform",
+    "heading": "Civic intelligence for every resident",
+    "subheading": "The dashboard above is just the beginning. Civic Lens is building the full stack of civic transparency tools for College Park.",
+    "languageAvailable": "Available in English · Español · 中文",
+    "openFeed": "Open my feed"
+  },
+  "verify": {
+    "eyebrow": "Source Verification",
+    "heading": "Every summary is verifiable",
+    "body": "When we summarize a city document, we hash it, store it on IPFS, and register the hash on the Polygon blockchain. Anyone can verify that our AI summarized the exact document the city published — not an edited version.",
+    "cta": "Try verifying a source document",
+    "verified": "Document integrity verified"
+  },
+  "footer": {
+    "disclaimer": "Data sourced from College Park FY26 Budget Ordinance 25-O-04 (adopted May 20, 2025) and official City Council agendas from collegeparkmd.gov. This site is an independent civic project and is not affiliated with the City of College Park.",
+    "tagline": "Built for transparency · College Park, MD · 2026"
+  }
+}
