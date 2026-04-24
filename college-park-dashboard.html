@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>College Park Civic Dashboard · FY2026</title>
+<meta name="description" content="Where College Park's $29.6M budget goes — and what the council is deciding this week. A public transparency tool for residents and UMD students." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Source+Serif+4:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { cream: '#f5f0e8', ink: '#1a1a1a', forest: '#2d6a4f' },
+        fontFamily: {
+          serif: ['Fraunces', 'Georgia', 'serif'],
+          sans: ['"Source Serif 4"', 'Georgia', 'serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  body { background: #f5f0e8; color: #1a1a1a; font-family: "Source Serif 4", Georgia, serif; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; }
+  .accordion-content { display: none; }
+  .accordion-content.open { display: block; }
+  .chev { transition: transform 0.2s; }
+  .chev.open { transform: rotate(180deg); }
+  button { cursor: pointer; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<header class="bg-ink text-cream py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-sm uppercase tracking-widest text-green-400 font-semibold mb-4">College Park, Maryland · FY2026</p>
+    <h1 class="text-5xl sm:text-6xl font-serif font-bold leading-tight mb-6 max-w-3xl">
+      Your city budget,<br /><span class="text-green-400">in plain English.</span>
+    </h1>
+    <p class="text-stone-300 text-xl max-w-2xl mb-10 leading-relaxed">
+      $29.6 million. 34,000 residents. One place to see where the money goes and what the council is deciding right now.
+    </p>
+    <div class="flex flex-wrap gap-6 text-sm text-stone-400">
+      <div><span class="text-3xl font-serif font-bold text-cream">$870</span><p class="mt-0.5">per resident / year</p></div>
+      <div class="w-px bg-stone-700 hidden sm:block"></div>
+      <div><span class="text-3xl font-serif font-bold text-cream">33.5¢</span><p class="mt-0.5">per $100 — half the county avg</p></div>
+      <div class="w-px bg-stone-700 hidden sm:block"></div>
+      <div><span class="text-3xl font-serif font-bold text-cream">5</span><p class="mt-0.5">council items this month</p></div>
+      <div class="w-px bg-stone-700 hidden sm:block"></div>
+      <div><span class="text-3xl font-serif font-bold text-cream">~40,000</span><p class="mt-0.5">UMD students · the largest constituency<br/>that rarely votes locally</p></div>
+    </div>
+    <a href="#budget" class="mt-12 inline-flex items-center gap-2 text-green-400 text-sm font-medium hover:text-green-300">Explore the budget ↓</a>
+  </div>
+</header>
+
+<section id="budget" class="py-16 px-4 max-w-5xl mx-auto">
+  <p class="text-sm uppercase tracking-widest text-forest font-semibold mb-2">City Budget</p>
+  <h2 class="text-4xl font-serif font-bold text-ink mb-3">
+    Where your <span class="text-forest">$870</span> goes
+  </h2>
+  <p class="text-stone-600 text-lg max-w-2xl mb-8">
+    College Park's FY2026 operating budget is <strong>$29.6M</strong> — roughly <strong>$870/resident/year</strong>.
+    Your property tax rate is <strong>33.5¢/$100</strong> — half the PG County average of 63.27¢/$100.
+  </p>
+
+  <div class="flex gap-2 mb-8">
+    <button class="view-toggle px-4 py-1.5 rounded-full text-sm font-medium border bg-forest text-cream border-forest" data-view="spending">By Department</button>
+    <button class="view-toggle px-4 py-1.5 rounded-full text-sm font-medium border bg-transparent text-stone-600 border-stone-300 hover:border-forest hover:text-forest" data-view="revenue">By Revenue Source</button>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+    <div class="h-64 relative"><canvas id="budgetChart"></canvas></div>
+    <div id="legendList" class="space-y-2"></div>
+  </div>
+
+  <div id="deptDetail" class="hidden bg-green-50 border border-green-100 rounded-xl p-5 mb-12 flex gap-4 items-start"></div>
+
+  <div class="mb-12">
+    <h3 class="text-xl font-serif font-bold text-ink mb-1">Capital Projects — <span class="text-forest">$10.3M</span></h3>
+    <p class="text-stone-500 text-sm mb-5">One-time investments in infrastructure, separate from the operating budget.</p>
+    <div id="capitalGrid" class="grid sm:grid-cols-3 gap-4"></div>
+  </div>
+
+  <div class="mb-12">
+    <h3 class="text-xl font-serif font-bold text-ink mb-1">Town &amp; Gown</h3>
+    <p class="text-stone-500 text-sm mb-5">College Park is two cities sharing one zip code. Here's how the budget serves both.</p>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="border border-stone-200 bg-white rounded-xl p-4">
+        <p class="font-semibold text-ink text-sm mb-1">Two budgets, one zip code</p>
+        <p class="text-forest font-mono font-bold text-lg mb-2">$2.98B vs. $29.6M</p>
+        <p class="text-stone-500 text-xs leading-relaxed">UMD operates on a $2.98B FY26 budget within city limits — roughly 100&times; the city's $29.6M operating budget.
+          <a href="https://finance.umd.edu/budget/facts-and-figures/operating-budget" target="_blank" rel="noopener noreferrer" class="text-forest underline decoration-dotted hover:no-underline">Source</a>
+        </p>
+      </div>
+      <div class="border border-stone-200 bg-white rounded-xl p-4">
+        <p class="font-semibold text-ink text-sm mb-1">Who pays city property tax</p>
+        <p class="text-forest font-mono font-bold text-lg mb-2">~50% renters</p>
+        <p class="text-stone-500 text-xs leading-relaxed">Roughly half of College Park households are renters. Students in dorms don't pay city property tax directly; off-campus renters pay it indirectly through rent. The tax base depends on residents who often don't realize they're contributing.</p>
+      </div>
+      <div class="border border-stone-200 bg-white rounded-xl p-4">
+        <p class="font-semibold text-ink text-sm mb-1">Police coverage isn't uniform</p>
+        <p class="text-forest font-mono font-bold text-lg mb-2">3 neighborhoods</p>
+        <p class="text-stone-500 text-xs leading-relaxed">UMPD has concurrent jurisdiction in parts of the city but not Oak Springs, Daniels Park, or College Park Woods. Those areas rely entirely on the PG County Police contract — up for renewal this month.
+          <a href="https://dbknews.com" target="_blank" rel="noopener noreferrer" class="text-forest underline decoration-dotted hover:no-underline">Source</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-serif font-bold text-ink mb-4">What changed in FY26</h3>
+    <div id="changesGrid" class="grid sm:grid-cols-2 gap-2"></div>
+  </div>
+</section>
+
+<div id="bridgeBanner" class="hidden bg-forest/10 border-y border-forest/20 py-3 px-4 text-center">
+  <p class="text-forest text-sm font-medium">Showing budget ↕ council connection — scroll down to see council items in this category</p>
+</div>
+
+<section id="council" class="py-16 px-4 max-w-5xl mx-auto border-t border-stone-200">
+  <p class="text-sm uppercase tracking-widest text-forest font-semibold mb-2">City Council</p>
+  <h2 class="text-4xl font-serif font-bold text-ink mb-3">This week at City Hall</h2>
+  <p id="councilSubtitle" class="text-stone-600 text-lg max-w-2xl mb-6">
+    Recent and upcoming items from the College Park City Council — in plain English.
+  </p>
+  <div class="flex flex-wrap gap-2 mb-6">
+    <button id="filterAll" class="filter-chip px-4 py-1.5 rounded-full text-sm font-medium border bg-forest text-cream border-forest">All items</button>
+    <button id="filterStudents" class="filter-chip px-4 py-1.5 rounded-full text-sm font-medium border bg-transparent text-stone-600 border-stone-300 hover:border-forest hover:text-forest">🎓 Students</button>
+  </div>
+  <div id="councilList" class="space-y-4"></div>
+</section>
+
+<footer class="border-t border-stone-200 py-10 px-4 text-center">
+  <p class="text-stone-500 text-sm max-w-2xl mx-auto">
+    Data sourced from College Park FY26 Budget Ordinance 25-O-04 (adopted May 20, 2025) and official City Council agendas from
+    <a href="https://www.collegeparkmd.gov/AgendaCenter" class="text-forest underline decoration-dotted hover:no-underline" target="_blank" rel="noopener noreferrer">collegeparkmd.gov</a>.
+    This site is an independent civic project and is not affiliated with the City of College Park.
+  </p>
+  <p class="text-stone-400 text-xs mt-3">Built for transparency · College Park, MD · 2026</p>
+</footer>
+
+<script>
+const BUDGET = {
+  perResident: 870,
+  departments: [
+    { id: 'public-works',         label: 'Public Works',                    amount: 8200000, pct: 28, color: '#1b4332', icon: '🔧',
+      description: 'Roads, sidewalks, stormwater, street lighting, and trash collection. Keeps the physical city running.' },
+    { id: 'public-services',      label: 'Public Services',                 amount: 6500000, pct: 22, color: '#2d6a4f', icon: '🚔',
+      description: 'Police contract with PG County, fire services, and emergency management. Your public safety budget.' },
+    { id: 'general-government',   label: 'General Government',              amount: 5300000, pct: 18, color: '#40916c', icon: '🏛️',
+      description: "City Manager's office, City Council operations, finance, HR, IT, and legal services." },
+    { id: 'planning-community',   label: 'Planning & Community Dev',        amount: 4700000, pct: 16, color: '#52b788', icon: '📐',
+      description: 'Zoning, building permits, economic development, and housing programs. Shapes what gets built where.' },
+    { id: 'youth-family-senior',  label: 'Youth, Family & Senior Services', amount: 4900000, pct: 16, color: '#74c69d', icon: '🤝',
+      description: 'Recreation programs, senior center, after-school activities, and community events for all ages.' },
+  ],
+  revenue: [
+    { id: 'property-tax', label: 'Property Tax',  amount: 15392000, pct: 52, color: '#2d6a4f' },
+    { id: 'other-taxes',  label: 'Other Taxes',   amount: 6808000,  pct: 23, color: '#40916c' },
+    { id: 'fines-fees',   label: 'Fines & Fees',  amount: 3848000,  pct: 13, color: '#74c69d' },
+    { id: 'other',        label: 'Other Revenue', amount: 3552000,  pct: 12, color: '#b7e4c7' },
+  ],
+  capital: [
+    { id: 'complete-streets',          label: 'Complete & Green Streets',            amount: 4200000, department: 'public-works',
+      description: 'Pedestrian and bicycle infrastructure improvements across the city, including sidewalk repairs and protected bike lanes.' },
+    { id: 'duvall-field',              label: 'Duvall Field Renovation',             amount: 3100000, department: 'youth-family-senior',
+      description: 'Renovation of Duvall Field athletic complex, including turf replacement and facility upgrades.' },
+    { id: 'north-cp-community-center', label: 'North College Park Community Center', amount: 3000000, department: 'youth-family-senior',
+      description: 'New community center facility for North College Park neighborhood residents.' },
+  ],
+  changes: [
+    { type: 'add',     text: '4 new positions added citywide' },
+    { type: 'add',     text: '4.5% cost-of-living adjustment (COLA) for all employees' },
+    { type: 'remove',  text: 'Student housing subsidy not renewed for FY26' },
+    { type: 'neutral', text: 'Property tax rate unchanged at 33.5¢/$100' },
+    { type: 'neutral', text: 'No new debt issued; capital projects funded from reserves' },
+  ],
+};
+
+const COUNCIL = [
+  { id: 'police-contract-renewal', title: 'PG County Police Services Contract Renewal',
+    summary: "The council is considering renewing the city's contract with Prince George's County Police Department for law enforcement services through FY27.",
+    detail: "College Park contracts with PGPD rather than maintaining its own police force. This renewal covers patrol coverage for Districts 1 and 4, setting staffing levels and the city's per-officer cost share.",
+    date: '2026-04-22', meetingType: 'City Council Regular Session', status: 'upcoming',
+    budgetCategory: 'public-services', tags: ['public-safety', 'contracts'],
+    studentRelevant: true,
+    studentImpact: "Affects students living off-campus in Oak Springs, Daniels Park, and College Park Woods — neighborhoods outside UMPD's concurrent jurisdiction that rely solely on this contract." },
+  { id: 'complete-streets-bid', title: 'Complete & Green Streets Phase 2 — Bid Award',
+    summary: 'The council will vote on awarding the construction contract for the next phase of sidewalk and bike lane improvements along Paint Branch Parkway.',
+    detail: 'Phase 2 covers approximately 1.2 miles of new protected bike lanes and ADA-compliant sidewalk reconstruction. Three bids were received; staff recommends the low bidder at $1.4M.',
+    date: '2026-04-22', meetingType: 'City Council Regular Session', status: 'upcoming',
+    budgetCategory: 'public-works', tags: ['infrastructure', 'transportation', 'capital-projects'],
+    studentRelevant: true,
+    studentImpact: 'Paint Branch Parkway is a primary commute route between off-campus housing and the UMD campus — these bike lanes and sidewalks change a daily route for thousands of students.' },
+  { id: 'fy27-budget-first-reading', title: 'FY27 Budget — First Reading',
+    summary: 'The council held its first public reading of the proposed FY27 operating budget, opening the floor for resident comment before final adoption in May.',
+    detail: 'The proposed FY27 budget totals approximately $31.1M, up roughly 5% from FY26. Key new items include two additional Public Works positions and expanded senior services hours.',
+    date: '2026-04-08', meetingType: 'City Council Regular Session', status: 'decided',
+    budgetCategory: 'general-government', tags: ['budget', 'fy27'] },
+  { id: 'duvall-field-design', title: 'Duvall Field Renovation — Design Approval',
+    summary: 'The council approved the final design plans for the Duvall Field renovation, clearing the project to move to construction bidding.',
+    detail: 'The approved design includes a full synthetic turf replacement, upgraded lighting to meet tournament standards, new bleachers, and accessible restroom facilities. Construction expected to begin summer 2026.',
+    date: '2026-03-25', meetingType: 'City Council Regular Session', status: 'decided',
+    budgetCategory: 'youth-family-senior', tags: ['parks', 'capital-projects', 'recreation'] },
+  { id: 'accessory-dwelling-units', title: 'Accessory Dwelling Unit Zoning Ordinance',
+    summary: 'The council referred a proposed ordinance to allow accessory dwelling units (in-law suites, backyard cottages) in single-family zones to the Planning Board for review.',
+    detail: 'The ordinance would permit property owners in R-1 and R-2 zones to add a second dwelling unit up to 800 sq ft on lots over 6,000 sq ft. The Planning Board will hold a public hearing before returning a recommendation.',
+    date: '2026-03-11', meetingType: 'City Council Regular Session', status: 'under-study',
+    budgetCategory: 'planning-community', tags: ['housing', 'zoning'],
+    studentRelevant: true,
+    studentImpact: 'Directly affects student rental housing supply — ADUs would add small rental units in single-family neighborhoods where most off-campus students already live.' },
+];
+
+const STATUS_CFG = {
+  upcoming:      { label: 'Upcoming',     cls: 'bg-amber-100 text-amber-800' },
+  decided:       { label: 'Decided',      cls: 'bg-green-100 text-green-800' },
+  'under-study': { label: 'Under Study',  cls: 'bg-sky-100 text-sky-800' },
+};
+const CHANGE_CFG = {
+  add:     { label: 'New',       cls: 'bg-green-100 text-green-800' },
+  remove:  { label: 'Removed',   cls: 'bg-red-100 text-red-800' },
+  neutral: { label: 'Unchanged', cls: 'bg-stone-100 text-stone-600' },
+};
+
+let activeCategory = null;
+let view = 'spending';
+let chart = null;
+let studentMode = false;
+
+const fmt = (n) => n >= 1e6 ? `$${(n/1e6).toFixed(1)}M` : n >= 1e3 ? `$${(n/1e3).toFixed(0)}K` : `$${n}`;
+const fmtDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const deptById = (id) => BUDGET.departments.find(d => d.id === id);
+
+function setCategory(id) {
+  activeCategory = (activeCategory === id) ? null : id;
+  if (activeCategory) studentMode = false;
+  renderAll();
+}
+
+function setStudentMode(on) {
+  studentMode = on;
+  if (on) activeCategory = null;
+  renderAll();
+}
+
+function setView(v) {
+  view = v;
+  if (v === 'revenue') activeCategory = null;
+  document.querySelectorAll('.view-toggle').forEach(b => {
+    const isActive = b.dataset.view === v;
+    b.className = `view-toggle px-4 py-1.5 rounded-full text-sm font-medium border ${isActive ? 'bg-forest text-cream border-forest' : 'bg-transparent text-stone-600 border-stone-300 hover:border-forest hover:text-forest'}`;
+  });
+  renderAll();
+}
+
+function renderChart() {
+  const data = view === 'spending' ? BUDGET.departments : BUDGET.revenue;
+  const colors = data.map(d => {
+    if (view !== 'spending' || activeCategory === null) return d.color;
+    return activeCategory === d.id ? d.color : d.color + '55';
+  });
+  const ctx = document.getElementById('budgetChart');
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{ data: data.map(d => d.amount), backgroundColor: colors, borderWidth: 2, borderColor: '#f5f0e8', hoverOffset: 8 }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${fmt(ctx.parsed)}` } },
+      },
+      onClick: (e, els) => {
+        if (view !== 'spending' || !els.length) return;
+        setCategory(data[els[0].index].id);
+      },
+    },
+  });
+}
+
+function renderLegend() {
+  const data = view === 'spending' ? BUDGET.departments : BUDGET.revenue;
+  const list = document.getElementById('legendList');
+  list.innerHTML = data.map(item => {
+    const isActive = activeCategory === item.id;
+    const isDimmed = view === 'spending' && activeCategory !== null && !isActive;
+    const clickable = view === 'spending';
+    return `
+      <button data-cat="${item.id}" class="legend-item w-full text-left flex items-center gap-3 p-3 rounded-lg transition-all ${clickable ? 'hover:bg-stone-50' : 'cursor-default'} ${isActive ? 'bg-green-50 ring-1 ring-forest/30' : ''} ${isDimmed ? 'opacity-40' : ''}">
+        <span class="w-3 h-3 rounded-full shrink-0" style="background-color:${item.color}"></span>
+        <span class="flex-1 text-sm font-medium text-ink">${item.label}</span>
+        <span class="text-sm text-stone-500 font-mono">${fmt(item.amount)}</span>
+        <span class="text-xs text-stone-400 w-8 text-right">${item.pct}%</span>
+      </button>`;
+  }).join('') + (view === 'spending'
+    ? '<p class="text-xs text-stone-400 pt-1 pl-3">Click a category to filter council items below ↓</p>'
+    : '');
+  list.querySelectorAll('.legend-item').forEach(b => {
+    if (view === 'spending') b.addEventListener('click', () => setCategory(b.dataset.cat));
+  });
+}
+
+function renderDeptDetail() {
+  const el = document.getElementById('deptDetail');
+  if (view !== 'spending' || !activeCategory) { el.classList.add('hidden'); return; }
+  const d = deptById(activeCategory);
+  if (!d) { el.classList.add('hidden'); return; }
+  el.classList.remove('hidden');
+  el.innerHTML = `
+    <span class="text-3xl">${d.icon}</span>
+    <div>
+      <p class="font-semibold text-ink text-lg">${d.label}</p>
+      <p class="text-stone-600 text-sm mt-1">${d.description}</p>
+      <p class="text-forest font-mono font-semibold mt-2">${fmt(d.amount)} · ${d.pct}% of operating budget</p>
+    </div>`;
+}
+
+function renderCapital() {
+  const grid = document.getElementById('capitalGrid');
+  grid.innerHTML = BUDGET.capital.map(p => {
+    const highlighted = !activeCategory || p.department === activeCategory;
+    return `
+      <div class="border rounded-xl p-4 transition-opacity ${highlighted ? 'border-stone-200 bg-white' : 'opacity-30'}">
+        <p class="font-semibold text-ink text-sm mb-1">${p.label}</p>
+        <p class="text-forest font-mono font-bold text-lg mb-2">${fmt(p.amount)}</p>
+        <p class="text-stone-500 text-xs leading-relaxed">${p.description}</p>
+      </div>`;
+  }).join('');
+}
+
+function renderChanges() {
+  const grid = document.getElementById('changesGrid');
+  grid.innerHTML = BUDGET.changes.map(c => {
+    const cfg = CHANGE_CFG[c.type];
+    return `
+      <div class="flex items-start gap-3 p-3 bg-stone-50 rounded-lg">
+        <span class="mt-0.5 px-2 py-0.5 rounded text-xs font-semibold shrink-0 ${cfg.cls}">${cfg.label}</span>
+        <p class="text-sm text-stone-700">${c.text}</p>
+      </div>`;
+  }).join('');
+}
+
+function renderBridge() {
+  document.getElementById('bridgeBanner').classList.toggle('hidden', !activeCategory);
+}
+
+function renderCouncil() {
+  let items = COUNCIL;
+  if (studentMode) items = COUNCIL.filter(i => i.studentRelevant);
+  else if (activeCategory) items = COUNCIL.filter(i => i.budgetCategory === activeCategory);
+
+  // Sync filter chip styling
+  const allBtn = document.getElementById('filterAll');
+  const studentBtn = document.getElementById('filterStudents');
+  const allActive = !studentMode && !activeCategory;
+  if (allBtn) allBtn.className = `filter-chip px-4 py-1.5 rounded-full text-sm font-medium border ${allActive ? 'bg-forest text-cream border-forest' : 'bg-transparent text-stone-600 border-stone-300 hover:border-forest hover:text-forest'}`;
+  if (studentBtn) studentBtn.className = `filter-chip px-4 py-1.5 rounded-full text-sm font-medium border ${studentMode ? 'bg-forest text-cream border-forest' : 'bg-transparent text-stone-600 border-stone-300 hover:border-forest hover:text-forest'}`;
+
+  const subtitle = document.getElementById('councilSubtitle');
+  if (studentMode) {
+    subtitle.innerHTML = 'Council items that affect UMD students directly — with the plain-language <em>why</em> for each.';
+  } else if (activeCategory) {
+    subtitle.innerHTML = `Recent and upcoming items from the College Park City Council — in plain English. Filtered to <button id="clearFilter" class="text-forest font-semibold underline decoration-dotted hover:no-underline">${deptById(activeCategory).label}</button> <button id="clearFilter2" class="ml-2 text-stone-400 hover:text-stone-700 text-sm">(clear filter)</button>`;
+  } else {
+    subtitle.innerHTML = 'Recent and upcoming items from the College Park City Council — in plain English.';
+  }
+  const clear1 = document.getElementById('clearFilter');
+  const clear2 = document.getElementById('clearFilter2');
+  if (clear1) clear1.addEventListener('click', () => setCategory(activeCategory));
+  if (clear2) clear2.addEventListener('click', () => setCategory(activeCategory));
+
+  const list = document.getElementById('councilList');
+  if (!items.length) {
+    list.innerHTML = `
+      <div class="text-center py-16 text-stone-400">
+        <p class="text-lg">No recent council items in this filter.</p>
+        <button id="showAll" class="mt-3 text-forest font-medium underline decoration-dotted">Show all items</button>
+      </div>`;
+    document.getElementById('showAll').addEventListener('click', () => {
+      studentMode = false; activeCategory = null; renderAll();
+    });
+    return;
+  }
+
+  list.innerHTML = items.map(item => {
+    const status = STATUS_CFG[item.status];
+    const dept = deptById(item.budgetCategory);
+    return `
+      <article class="border border-stone-200 rounded-xl overflow-hidden bg-white">
+        <button class="acc-toggle w-full text-left p-5 flex items-start gap-4 hover:bg-stone-50 transition-colors" data-id="${item.id}">
+          <span class="mt-1.5 w-2.5 h-2.5 rounded-full shrink-0" style="background-color:${dept.color}"></span>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap gap-2 mb-1.5">
+              <span class="px-2 py-0.5 rounded text-xs font-semibold ${status.cls}">${status.label}</span>
+              <button class="cat-tag px-2 py-0.5 rounded text-xs font-medium border border-stone-200 text-stone-500 hover:border-forest hover:text-forest" data-cat="${item.budgetCategory}">${dept.label}</button>
+            </div>
+            <h3 class="font-serif font-bold text-ink text-lg leading-snug">${item.title}</h3>
+            <p class="text-stone-500 text-sm mt-1">${item.summary}</p>
+            ${studentMode && item.studentImpact ? `
+              <div class="mt-3 flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-lg p-2.5">
+                <span class="text-base leading-none mt-0.5">🎓</span>
+                <p class="text-xs text-amber-900 leading-relaxed"><span class="font-semibold">Why this affects students:</span> ${item.studentImpact}</p>
+              </div>` : ''}
+            <p class="text-xs text-stone-400 mt-2">${fmtDate(item.date)} · ${item.meetingType}</p>
+          </div>
+          <span class="chev text-stone-400 mt-1 shrink-0">▾</span>
+        </button>
+        <div class="accordion-content border-t border-stone-100 px-5 pb-5 pt-0" data-content="${item.id}">
+          <p class="text-stone-700 text-sm leading-relaxed mt-4 mb-4">${item.detail}</p>
+          <div class="flex flex-wrap gap-2">
+            <a href="https://www.collegeparkmd.gov/AgendaCenter" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-medium text-forest border border-forest/30 px-3 py-1.5 rounded-full hover:bg-forest hover:text-cream transition-colors">
+              Official Agenda ↗
+            </a>
+            ${item.tags.map(t => `<span class="text-xs text-stone-500 border border-stone-200 px-3 py-1.5 rounded-full">${t}</span>`).join('')}
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+
+  list.querySelectorAll('.acc-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const content = list.querySelector(`[data-content="${id}"]`);
+      const chev = btn.querySelector('.chev');
+      const isOpen = content.classList.contains('open');
+      list.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+      list.querySelectorAll('.chev').forEach(c => c.classList.remove('open'));
+      if (!isOpen) { content.classList.add('open'); chev.classList.add('open'); }
+    });
+  });
+  list.querySelectorAll('.cat-tag').forEach(tag => {
+    tag.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setCategory(tag.dataset.cat);
+    });
+  });
+}
+
+function renderAll() {
+  renderChart();
+  renderLegend();
+  renderDeptDetail();
+  renderCapital();
+  renderChanges();
+  renderBridge();
+  renderCouncil();
+}
+
+document.querySelectorAll('.view-toggle').forEach(b => {
+  b.addEventListener('click', () => setView(b.dataset.view));
+});
+document.getElementById('filterAll').addEventListener('click', () => {
+  studentMode = false; activeCategory = null; renderAll();
+});
+document.getElementById('filterStudents').addEventListener('click', () => setStudentMode(!studentMode));
+window.addEventListener('load', renderAll);
+</script>
+
+</body>
+</html>
