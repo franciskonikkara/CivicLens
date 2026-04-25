@@ -1,99 +1,99 @@
-// Static data for the College Park FY2026 dashboard
-// In production these come from Supabase; for Phase 1 they live here.
+// Static data for the College Park FY2027 Proposed dashboard
 
 export const BUDGET = {
-  perResident: 870,
-  totalOperating: 29_600_000,
+  perResident: 927,
+  totalOperating: 31_500_000,
+  sourcePdfUrl: "https://www.collegeparkmd.gov/DocumentCenter/View/7603/FY27-Budget-Proposed-",
   departments: [
+    {
+      id: "general-government",
+      label: "General Government & Admin",
+      amount: 9_779_587,
+      pct: 34,
+      color: "#1b4332",
+      icon: "🏛️",
+      description:
+        "Mayor & Council, City Manager, Finance, HR, IT, City Clerk, Communications, Economic Development, and non-departmental expenses (debt service, transfers, contingency).",
+    },
     {
       id: "public-works",
       label: "Public Works",
-      amount: 8_200_000,
-      pct: 28,
-      color: "#1b4332",
+      amount: 8_646_793,
+      pct: 30,
+      color: "#2d6a4f",
       icon: "🔧",
       description:
-        "Roads, sidewalks, stormwater, street lighting, and trash collection. Keeps the physical city running.",
+        "Refuse, recycling, street maintenance, snow & ice, leaf collection, fleet, parking garage, building maintenance, tree & landscape. Keeps the physical city running.",
     },
     {
       id: "public-services",
       label: "Public Services",
-      amount: 6_500_000,
-      pct: 22,
-      color: "#2d6a4f",
+      amount: 6_683_839,
+      pct: 24,
+      color: "#40916c",
       icon: "🚔",
       description:
-        "Police contract with PG County, fire services, and emergency management. Your public safety budget.",
-    },
-    {
-      id: "general-government",
-      label: "General Government",
-      amount: 5_300_000,
-      pct: 18,
-      color: "#40916c",
-      icon: "🏛️",
-      description:
-        "City Manager's office, City Council operations, finance, HR, IT, and legal services.",
-    },
-    {
-      id: "planning-community",
-      label: "Planning & Community Dev",
-      amount: 4_700_000,
-      pct: 16,
-      color: "#52b788",
-      icon: "📐",
-      description:
-        "Zoning, building permits, economic development, and housing programs. Shapes what gets built where.",
+        "Contract police with PG County, code compliance, parking enforcement, traffic enforcement, animal welfare. Your public safety and code budget.",
     },
     {
       id: "youth-family-senior",
       label: "Youth, Family & Senior Services",
-      amount: 4_900_000,
-      pct: 16,
-      color: "#74c69d",
+      amount: 2_477_503,
+      pct: 9,
+      color: "#52b788",
       icon: "🤝",
       description:
-        "Recreation programs, senior center, after-school activities, and community events for all ages.",
+        "Senior programs, clinical services, youth & family programming, transportation for seniors. Adds 1 Emergency Support Specialist and 1 PT bus driver in FY27.",
+    },
+    {
+      id: "planning-community",
+      label: "Planning & Community Dev",
+      amount: 815_965,
+      pct: 3,
+      color: "#74c69d",
+      icon: "📐",
+      description:
+        "Zoning, planning support, and community development. Smaller than you might expect — most planning is done by Prince George's County.",
     },
   ],
   revenue: [
-    { id: "property-tax", label: "Property Tax",  amount: 15_392_000, pct: 52, color: "#2d6a4f" },
-    { id: "other-taxes",  label: "Other Taxes",   amount: 6_808_000,  pct: 23, color: "#40916c" },
-    { id: "fines-fees",   label: "Fines & Fees",  amount: 3_848_000,  pct: 13, color: "#74c69d" },
-    { id: "other",        label: "Other Revenue", amount: 3_552_000,  pct: 12, color: "#b7e4c7" },
+    { id: "property-tax", label: "Property Taxes",           amount: 16_325_000, pct: 52, color: "#2d6a4f" },
+    { id: "other-taxes",  label: "Other Taxes",              amount:  7_099_640, pct: 22, color: "#40916c" },
+    { id: "fines-fees",   label: "Fines & Fees",             amount:  4_554_400, pct: 14, color: "#74c69d" },
+    { id: "other",        label: "Licenses, Charges & Misc", amount:  3_547_414, pct: 11, color: "#b7e4c7" },
   ],
   capital: [
     {
       id: "complete-streets",
       label: "Complete & Green Streets",
-      amount: 4_200_000,
+      amount: 2_176_959,
       department: "public-works",
       description:
-        "Pedestrian and bicycle infrastructure improvements across the city, including sidewalk repairs and protected bike lanes.",
+        "FY27 funding for the next phase of pedestrian and bike infrastructure. Cumulative project total: $9.0M through FY31.",
     },
     {
-      id: "duvall-field",
-      label: "Duvall Field Renovation",
-      amount: 3_100_000,
-      department: "youth-family-senior",
+      id: "pavement-management",
+      label: "Pavement Management Plan",
+      amount: 925_000,
+      department: "public-works",
       description:
-        "Renovation of Duvall Field athletic complex, including turf replacement and facility upgrades.",
+        "FY27 paving and street resurfacing across the city. Cumulative project total: $14.5M through FY31.",
     },
     {
       id: "north-cp-community-center",
-      label: "North CP Community Center",
-      amount: 3_000_000,
+      label: "North College Park Community Center",
+      amount: 1_250_000,
       department: "youth-family-senior",
       description:
-        "New community center facility for North College Park neighborhood residents.",
+        "New community center facility for North College Park. Most spending is in FY26 ($1.25M) with $250K continuing in FY27.",
     },
   ],
   changes: [
-    { type: "add",     text: "4 new positions added citywide" },
-    { type: "add",     text: "4.5% cost-of-living adjustment (COLA) for all employees" },
-    { type: "remove",  text: "Student housing subsidy not renewed for FY26" },
-    { type: "neutral", text: "Property tax rate unchanged at 33.5¢/$100" },
-    { type: "neutral", text: "No new debt issued; capital projects funded from reserves" },
+    { type: "add",     text: "5 new positions: Emergency Support Specialist, Housing Project Manager, Recreational Coordinator, Engineering/GIS Tech, plus a part-time bus driver" },
+    { type: "add",     text: "3% cost-of-living adjustment (COLA) for all employees, per new union contract" },
+    { type: "add",     text: "Stop-sign camera enforcement adds an estimated $655K in fines & fees revenue" },
+    { type: "neutral", text: "Property tax rate unchanged: 33.5¢/$100 residential, 38.5¢/$100 commercial" },
+    { type: "remove",  text: "No appropriated fund balance in FY27 (vs. $106K from FY24 surplus used in FY26)" },
   ],
 };
 
@@ -110,6 +110,10 @@ export const COUNCIL_ITEMS = [
     status: "upcoming" as const,
     budgetCategory: "public-services",
     tags: ["public-safety", "contracts"],
+    agendaUrl: "https://www.collegeparkmd.gov/AgendaCenter/ViewFile/Agenda/_04212026-2248",
+    studentRelevant: true,
+    studentImpact:
+      "Affects students living off-campus in Oak Springs, Daniels Park, and College Park Woods — neighborhoods outside UMPD's concurrent jurisdiction that rely solely on this contract.",
   },
   {
     id: "complete-streets-bid",
@@ -123,19 +127,24 @@ export const COUNCIL_ITEMS = [
     status: "upcoming" as const,
     budgetCategory: "public-works",
     tags: ["infrastructure", "transportation", "capital-projects"],
+    agendaUrl: "https://www.collegeparkmd.gov/AgendaCenter/ViewFile/Agenda/_04212026-2248",
+    studentRelevant: true,
+    studentImpact:
+      "Paint Branch Parkway is a primary commute route between off-campus housing and the UMD campus — these bike lanes and sidewalks change a daily route for thousands of students.",
   },
   {
     id: "fy27-budget-first-reading",
-    title: "FY27 Budget — First Reading",
+    title: "FY27 Budget — Introduction & Public Hearing",
     summary:
-      "The council held its first public reading of the proposed FY27 operating budget, opening the floor for resident comment before final adoption in May.",
+      "The City Manager has submitted the proposed FY27 budget. The ordinance is being introduced this month, with a public hearing in May and final adoption required by May 31.",
     detail:
-      "The proposed FY27 budget totals approximately $31.1M, up roughly 5% from FY26. Key new items include two additional Public Works positions and expanded senior services hours.",
-    date: "2026-04-08",
+      "The proposed FY27 budget totals $31.5M (up 5.6% from FY26). It adds 5 new positions, includes a 3% COLA, holds the property tax rate flat at 33.5¢/$100, and projects $655K in new revenue from stop-sign camera enforcement. Two listening sessions were held at City Hall before submission.",
+    date: "2026-04-22",
     meetingType: "City Council Regular Session",
-    status: "decided" as const,
+    status: "upcoming" as const,
     budgetCategory: "general-government",
-    tags: ["budget", "fy27"],
+    tags: ["budget", "fy27", "public-comment"],
+    agendaUrl: "https://www.collegeparkmd.gov/AgendaCenter/ViewFile/Agenda/_04212026-2248",
   },
   {
     id: "duvall-field-design",
@@ -149,6 +158,7 @@ export const COUNCIL_ITEMS = [
     status: "decided" as const,
     budgetCategory: "youth-family-senior",
     tags: ["parks", "capital-projects", "recreation"],
+    agendaUrl: "https://www.collegeparkmd.gov/AgendaCenter/ViewFile/Agenda/_03242026-2230",
   },
   {
     id: "accessory-dwelling-units",
@@ -162,6 +172,10 @@ export const COUNCIL_ITEMS = [
     status: "under-study" as const,
     budgetCategory: "planning-community",
     tags: ["housing", "zoning"],
+    agendaUrl: "https://www.collegeparkmd.gov/AgendaCenter/ViewFile/Agenda/_03102026-2220",
+    studentRelevant: true,
+    studentImpact:
+      "Directly affects student rental housing supply — ADUs would add small rental units in single-family neighborhoods where most off-campus students already live.",
   },
 ];
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart, ArcElement, DoughnutController, Tooltip, Legend } from "chart.js";
 import type { ChartConfiguration } from "chart.js";
 import { fmt } from "@/lib/data";
 
-Chart.register(ArcElement, Tooltip, Legend);
+Chart.register(ArcElement, DoughnutController, Tooltip, Legend);
 
 type Slice = { id: string; label: string; amount: number; color: string };
 
