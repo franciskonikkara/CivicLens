@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import BudgetSection from "@/components/dashboard/BudgetSection";
 import CouncilSection from "@/components/dashboard/CouncilSection";
 import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
